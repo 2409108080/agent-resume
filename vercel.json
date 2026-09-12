@@ -4,8 +4,5 @@
   "installCommand": "pip install openai",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/chat.py" }
-  ],
-  "env": {
-    "BAILIAN_API_KEY": "@bailian_api_key"
-  }
+  ]
 }
