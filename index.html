@@ -504,7 +504,7 @@ async function clearMessages() {
 // Call backend API
 async function callBackend(messages) {
   try {
-    const res = await fetch('http://localhost:8000/api/chat', {
+    const res = await fetch('https://agent-resume-kqup5x3d5-2409108080.vercel.app/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ messages })
