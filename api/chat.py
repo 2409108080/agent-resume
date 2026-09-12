@@ -1,5 +1,6 @@
 import json
 import os
+from http.server import BaseHTTPRequestHandler
 
 # 候选人设定
 CANDIDATE_PROFILE = """你是一个专业的候选人AI代理，代替一位求职者回答面试官的问题。注意：这个对话项目本身是由 vibecoding（通过自然语言驱动AI编写代码的方式）开发的AI Agent智能体。
@@ -75,72 +76,61 @@ CANDIDATE_PROFILE = """你是一个专业的候选人AI代理，代替一位求�
 5. 保持回答长度适中，不要过长也不要过短"""
 
 
-def handler(request):
-    """Vercel Python Serverless Function handler"""
-    if request.method == "OPTIONS":
-        return Response(
-            status=204,
-            headers={
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "POST, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type",
-            }
-        )
+class handler(BaseHTTPRequestHandler):
+    """Vercel Python Serverless Function"""
 
-    try:
-        body = json.loads(request.body.decode("utf-8")) if request.body else {}
-        messages = body.get("messages", [])
-        session_id = body.get("session_id", "default")
+    def _send_json(self, data, status=200):
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.end_headers()
+        self.wfile.write(json.dumps(data, ensure_ascii=False).encode("utf-8"))
 
-        last_msg = messages[-1]["content"] if messages else ""
-        if not last_msg:
-            return Response(
-                body=json.dumps({"response": "你好！我是候选人的AI代理 "}),
-                headers={"Content-Type": "application/json"}
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.end_headers()
+
+    def do_GET(self):
+        # 方便浏览器直接访问确认函数存活
+        self._send_json({"status": "ok", "message": "AI Agent 后端运行中，请用 POST 调用"})
+
+    def do_POST(self):
+        try:
+            length = int(self.headers.get("Content-Length", 0) or 0)
+            raw = self.rfile.read(length) if length else b"{}"
+            body = json.loads(raw.decode("utf-8"))
+            messages = body.get("messages", [])
+
+            # 只保留最近10条，防止超长
+            messages = messages[-10:]
+
+            if not messages or not messages[-1].get("content"):
+                return self._send_json({"response": "你好！我是张文远的 AI 代理，有什么想问的？"})
+
+            # 带上完整对话历史（无状态函数，由前端传历史实现记忆）
+            llm_messages = [{"role": "system", "content": CANDIDATE_PROFILE}]
+            for m in messages:
+                role = m.get("role", "user")
+                if role in ("user", "assistant"):
+                    llm_messages.append({"role": role, "content": m.get("content", "")})
+
+            from openai import OpenAI
+            client = OpenAI(
+                api_key=os.getenv("BAILIAN_API_KEY", ""),
+                base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
             )
 
-        # 构建发送给大模型的消息
-        llm_messages = [
-            {"role": "system", "content": CANDIDATE_PROFILE},
-            {"role": "user", "content": last_msg}
-        ]
+            response = client.chat.completions.create(
+                model="qwen-max",
+                messages=llm_messages,
+                temperature=0.7,
+            )
 
-        # 调用阿里云百炼（通义千问）
-        from openai import OpenAI
-        client = OpenAI(
-            api_key=os.getenv("BAILIAN_API_KEY", ""),
-            base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
-        )
+            result = response.choices[0].message.content
+            self._send_json({"response": result})
 
-        response = client.chat.completions.create(
-            model="qwen-max",
-            messages=llm_messages,
-            temperature=0.7,
-        )
-
-        result = response.choices[0].message.content
-
-        return Response(
-            body=json.dumps({"response": result}),
-            headers={
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-            }
-        )
-
-    except Exception as e:
-        return Response(
-            body=json.dumps({"response": f"抱歉，出错了：{str(e)}"}),
-            status=500,
-            headers={
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-            }
-        )
-
-
-class Response:
-    def __init__(self, body="", status=200, headers=None):
-        self.body = body
-        self.status = status
-        self.headers = headers or {}
+        except Exception as e:
+            self._send_json({"response": f"抱歉，出错了：{str(e)}"}, status=500)
