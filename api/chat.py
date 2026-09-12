@@ -94,15 +94,8 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        # 临时诊断接口：检查环境变量是否注入正确（只显示长度和首尾，不暴露完整key）
-        key = os.getenv("BAILIAN_API_KEY", "")
-        self._send_json({
-            "status": "ok",
-            "env_key_found": bool(key),
-            "key_length": len(key),
-            "key_head": key[:8] if key else None,
-            "key_tail": key[-4:] if key else None,
-        })
+        # 健康检查：确认函数存活
+        self._send_json({"status": "ok", "message": "AI Agent 后端运行中，请用 POST 调用"})
 
     def do_POST(self):
         try:
