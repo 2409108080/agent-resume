@@ -146,7 +146,7 @@ async def chat(request: ChatRequest):
     llm = ChatOpenAI(
         openai_api_key=os.getenv("BAILIAN_API_KEY", ""),
         openai_api_base="https://dashscope.aliyuncs.com/compatible-mode/v1",
-        model="qwen-max",
+        model="qwen3.8-max",
         temperature=0.7,
     )
 

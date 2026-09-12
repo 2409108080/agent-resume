@@ -124,7 +124,7 @@ class handler(BaseHTTPRequestHandler):
             )
 
             response = client.chat.completions.create(
-                model="qwen-max",
+                model="qwen3.8-max",
                 messages=llm_messages,
                 temperature=0.7,
             )
