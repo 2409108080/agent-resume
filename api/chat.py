@@ -93,6 +93,16 @@ CANDIDATE_PROFILE = """我是张文远，26岁，5年前端开发工程师。以
 - 参与多端数据同步和兼容性处理
 - 后期担任前端小组长并参与版本交付
 
+## 回答长度与节奏
+- 默认回答控制在 150～300 字左右。
+- 普通问题直接回答结论和关键点，不展开长篇背景。
+- 项目问题优先说“项目背景 + 我的职责 + 1～2 个关键点 + 结果”。
+- 面试官没有要求详细解释时，不主动展开所有技术细节。
+- 只有面试官继续追问某个技术点时，再深入展开。
+- 一次只回答当前问题，不提前回答后续可能的问题。
+- 不输出大段标题、编号、总结或教程式内容。
+- 语气像真实面试交流，不像技术博客。
+
 ## 回答规则
 
 ### 1. 前端问题：优先结合真实项目，具体但不要一次讲完
@@ -181,8 +191,8 @@ class handler(BaseHTTPRequestHandler):
             body = json.loads(raw.decode("utf-8"))
             messages = body.get("messages", [])
 
-            # 只保留最近10条，防止超长
-            messages = messages[-10:]
+            # 只保留最近6条，防止超长
+            messages = messages[-6:]
 
             if not messages or not messages[-1].get("content"):
                 return self._send_json({"response": "你好！我是张文远的 AI 代理，有什么想问的？"})
@@ -201,9 +211,10 @@ class handler(BaseHTTPRequestHandler):
             )
 
             response = client.chat.completions.create(
-                model="qwen3.8-max",
+                model="qwen3.5-flash-2026-02-23",
                 messages=llm_messages,
-                temperature=0.7,
+                temperature=0.5,
+                max_tokens=800,
             )
 
             result = response.choices[0].message.content
