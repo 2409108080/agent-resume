@@ -489,8 +489,8 @@ function formatContent(text) {
   let html = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
     .replace(/```(\w*)\n([\s\S]*?)```/g,'<pre><code>$2</code></pre>')
     .replace(/`([^`]+)`/g,'<code>$1</code>')
-    .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
-  return html.replace(/\n/g,'<br>');
+    .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n/g,' ');
 }
 
 async function clearMessages() {
@@ -546,13 +546,11 @@ async function handleSend(text) {
 
 // Input events
 userInput.addEventListener('input', () => {
-  userInput.style.height = '22px';
-  userInput.style.height = Math.min(userInput.scrollHeight, 120) + 'px';
   sendBtn.disabled = !userInput.value.trim() || isLoading;
 });
 
 userInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) {
+  if (e.key === 'Enter') {
     e.preventDefault();
     handleSend(userInput.value);
   }
