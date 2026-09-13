@@ -424,15 +424,8 @@ function addMessage(role, content, delay = 0) {
 
       const avatar = document.createElement('div');
       avatar.className = 'msg-avatar';
-      if (role === 'ai') {
-        avatar.textContent = '🧑‍';
-        avatar.style.background = 'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%)';
-        avatar.style.boxShadow = '0 0 12px rgba(108,92,231,0.35)';
-      } else if (role === 'user') {
-        avatar.textContent = '👨‍💼';
-        avatar.style.background = 'rgba(255,255,255,0.08)';
-        avatar.style.border = '1px solid var(--border)';
-      }
+      avatar.textContent = role === 'ai' ? '🧑' : '👨‍💻';
+      row.appendChild(avatar);
 
       const container = document.createElement('div');
       container.style.cssText = 'flex:1;min-width:0;';
