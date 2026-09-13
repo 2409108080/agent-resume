@@ -288,7 +288,10 @@
   /* Desktop */
   @media (min-width: 768px) {
     .messages { padding: 28px 24px 12px; }
-    .msg-row { max-width: 70%; }
+    .msg-row { max-width: 800px; margin: 0 auto; justify-content: center; }
+    .msg-row.ai { align-self: unset; }
+    .msg-row.user { align-self: unset; flex-direction: row-reverse; }
+    .msg-bubble { max-width: 800px; width: 100%; }
     .input-area { padding: 16px 24px 20px; }
     .welcome-card { padding: 48px 40px; }
     .welcome-icon { font-size: 64px; }
