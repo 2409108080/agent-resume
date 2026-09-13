@@ -258,17 +258,13 @@
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(108,92,231,0.35);
   }
-  .input-wrapper textarea {
+  .input-wrapper input {
     flex: 1; border: none; background: transparent;
     color: var(--text);
     font-family: var(--font); font-size: 14.5px; line-height: 1.5;
-    resize: none; outline: none; padding: 8px 0;
-    max-height: 120px; min-height: 22px; height: 22px;
-    scrollbar-width: none;
-    -webkit-scrollbar: none;
+    outline: none; padding: 8px 0; height: 22px;
   }
-  .input-wrapper textarea::-webkit-scrollbar { display: none; }
-  .input-wrapper textarea::placeholder { color: var(--text-muted); opacity: 0.6; }
+  .input-wrapper input::placeholder { color: var(--text-muted); opacity: 0.6; }
 
   .send-btn {
     width: 38px; height: 38px; border-radius: 50%; border: none;
@@ -353,7 +349,7 @@
   <div class="input-area">
     <div class="input-bar">
       <div class="input-wrapper">
-        <textarea id="userInput" placeholder="问问我关于他的技术栈、项目经验..." rows="1"></textarea>
+        <input type="text" id="userInput" placeholder="问问我关于他的技术栈、项目经验..." autocomplete="off" />
       </div>
       <button class="send-btn" id="sendBtn" disabled>
         <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
@@ -526,7 +522,6 @@ async function handleSend(text) {
   sendBtn.disabled = true;
   suggestionsEl.innerHTML = '';
   userInput.value = '';
-  userInput.style.height = '22px';
 
   await addMessage('user', text);
   conversationHistory.push({ role: 'user', content: text });
