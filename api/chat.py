@@ -209,8 +209,17 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        # 健康检查：确认函数存活
-        self._send_json({"status": "ok", "message": "AI Agent 后端运行中，请用 POST 调用"})
+        # 健康检查：确认函数存活，并报告 API key 是否已注入（只显示首尾几位，不泄露完整 key）
+        key = os.getenv("DEEPSEEK_API_KEY", "")
+        if key:
+            key_status = f"已配置（{key[:6]}...{key[-4:]}，共 {len(key)} 位）"
+        else:
+            key_status = "未配置！请检查 Vercel 环境变量，并确认已重新部署"
+        self._send_json({
+            "status": "ok",
+            "message": "AI Agent 后端运行中，请用 POST 调用",
+            "deepseek_key": key_status,
+        })
 
     def do_POST(self):
         try:
@@ -233,9 +242,16 @@ class handler(BaseHTTPRequestHandler):
                     llm_messages.append({"role": role, "content": m.get("content", "")})
 
             # 调用 DeepSeek 官方接口（OpenAI 兼容）
+            api_key = os.getenv("DEEPSEEK_API_KEY", "")
+            if not api_key:
+                return self._send_json(
+                    {"response": "服务端未读到 DEEPSEEK_API_KEY，请检查 Vercel 环境变量并重新部署"},
+                    status=500,
+                )
+
             from openai import OpenAI
             client = OpenAI(
-                api_key=os.getenv("DEEPSEEK_API_KEY", ""),
+                api_key=api_key,
                 base_url="https://api.deepseek.com",
             )
 
