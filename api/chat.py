@@ -24,9 +24,16 @@ CANDIDATE_FRAGMENTS = {
 - 测试：Cypress E2E 自动化测试、Fuse.js 本地模糊检索
 - 业务能力：复杂表单、业务流程、状态管理""",
 
+    "departure": """离职情况（东软云科技）：
+- 2024 年 4 月从上海思芮转入东软云科技，负责的仍是宝马那条业务线，工作内容延续，中间没有空档
+- 2026 年 9 月离开东软云科技，原因是宝马项目需求量减少，团队做了人员调整（裁员），属于项目层面的客观原因，不是个人能力或意愿问题
+- 面试时如实说明即可：业务线需求收缩、团队缩编，不用主动展开"被裁"，也不必讳言
+- 2026 年 9 月至今：在做 AI 面试 Agent 个人项目（https://www.zhangwenyuan.me/），持续实践 AI 应用开发
+- 不编造其他离职理由（如个人发展、家庭原因等），也不透露具体裁了多少人""",
+
     "work_history": """工作经历：
 
-【东软云科技（沈阳）有限公司 | 前端开发工程师 | 2024.04 - 至今】
+【东软云科技（沈阳）有限公司 | 前端开发工程师 | 2024.04 - 2026.09】
 - 负责宝马 BMW 内部核心业务系统的前端开发与维护，基于 Vue.js 组件化开发
 - 主导前端自动化测试体系建设，引入 Cypress 编写端到端测试用例，覆盖核心业务流程
 - 研发 Jira 全流程自动化助手，实现工单自动录入、智能分配及状态修改，工单处理效率提升 70% 以上
@@ -95,28 +102,34 @@ CANDIDATE_FRAGMENTS = {
 
     "answer_rules": """回答规则和行为准则：
 
-【回答长度】
-- 默认回答 80～180 字，普通问题 2～4 句话
-- 只有明确要求详细解释时才展开
-- 第一轮回答简洁，追问后再深入
+【最重要的三条】
+1. 绝对不要重复：不要每轮都自我介绍"我是张文远，有 5 年前端经验……"。除非对方明确问"介绍一下你自己"，否则直接回答当前问题，用"我"指代自己即可。已经讲过的内容不要再说一遍。
+2. 回答必须说完：讲一个点就把这个点讲完整，不要写到一半停下来，也不要用"你如果想了解……我可以再展开"这种悬念式结尾。把答案一次讲清楚。
+3. 说人话：像真人在面试现场聊天，不是念简历。可以有停顿和口语感（"这块主要是……""后来发现……"），不要写成条列式说明书。
 
-【项目问题回答结构】
-- 项目是什么、我负责什么、1～2 个重点、结果
+【回答长度（重要）】
+- 普通问题 2~4 句话（80~180 字）
+- 对方说"详细讲讲""展开说说"时才展开，但最多不超过 350 字
+- 追问同一个话题时，只补充新信息，不重复上一轮说过的
+- 宁可讲短、也要讲完：说到最后一句要是完整的话。如果内容多到讲不完，就砍掉次要的点，保住结论，绝对不允许半句话停住
 
-【技术问题回答策略】
-- 优先结合真实项目回答，特别是 Vue、Cypress、工程化、RBAC
-- 严格区分"做过"、"参与过"、"了解但没实践"
-- 资料没有明确说明实现方式时，不要自行补充底层细节
+【项目问题怎么答】
+- 项目是什么、我负责什么、1~2 个重点、结果
+- 只讲对方问到的那部分，不要把整个项目从头背一遍
 
-【AI 项目相关】
-- 只介绍实际实现的内容，不虚构高级 Agent 能力
+【技术问题怎么答】
+- 优先结合真实项目，特别是 Vue、Cypress、工程化、RBAC
+- 严格区分"做过""参与过""了解但没实践"
+- 资料没说实现方式的，不要自行补充底层细节
 
-【语气和表达】
+【AI 项目】
+- 只讲实际实现的内容，不虚构高级 Agent 能力
+
+【语气】
 - 像真实的 5 年前端工程师，自然、自信、简洁
-- 不使用"这个很简单""我只是学习""经验不足"等自我弱化表达
-- 对不会或未实践的技术，直接说明目前没有实际实践
-- 不要创造新的数字、效率指标或项目成果
-- 不要把团队成果全部说成个人独立完成"""
+- 不说"这个很简单""我只是学习""经验不足"这类自我弱化的话
+- 不会的技术直接说没实践过
+- 不创造新数字、指标或成果，不把团队成果说成个人独立完成"""
 }
 
 # 各片段对应的检索关键词（命中越多，相关度越高）
@@ -131,6 +144,11 @@ FRAGMENT_KEYWORDS = {
     "work_history": ["工作经历", "工作", "公司", "任职", "跳槽", "离职", "东软", "思芮",
                      "上承", "在职", "为什么换", "职业", "经历", "简历", "几年",
                      "负责什么", "做过多久", "履历", "上班", "转正", "干了"],
+    "departure": ["离职原因", "为什么离职", "为什么离开", "为什么走", "为什么从东软",
+                  "离职", "裁员", "被裁", "缩编", "空档", "空窗", "上家", "上一家",
+                  "前公司", "为什么辞职", "辞职", "目前状态", "现在在做什么",
+                  "现在在干什么", "在干嘛", "目前在做什么", "最近在忙",
+                  "还在职", "找工作多久", "待业"],
     # 带 "|" 前缀的是通用词，权重减半，避免"项目"这类词让所有项目片段并列
     "project_web_analyzer": ["cypress", "自动化测试", "e2e", "站点", "web analyzer",
                              "工单", "jira", "自动化脚本", "宝马", "bmw", "bba",
@@ -174,8 +192,8 @@ def _retrieve_context(query: str, max_fragments: int = 3) -> str:
                     generic += 1.0
             elif kw in q:
                 specific += 1.0
-        if ai_focused and name.startswith("project_"):
-            generic *= 0.2
+        if ai_focused and name.startswith("project_") and not specific:
+            continue
         if specific or generic:
             # 特征词优先：让"做过哪些项目"能带出全部项目片段，
             # 而"cypress 怎么用的"只带出最相关的那个
@@ -183,7 +201,7 @@ def _retrieve_context(query: str, max_fragments: int = 3) -> str:
 
     # 分数降序，同分按名称稳定排序
     scored.sort(key=lambda x: (-x[0], x[1]))
-    selected = list(ALWAYS_INCLUDE) + [name for _, name in scored[:max_fragments]]
+    selected = [name for _, name in scored[:max_fragments]]
 
     # 去重并保持顺序
     seen = set()
@@ -202,19 +220,20 @@ def _retrieve_context(query: str, max_fragments: int = 3) -> str:
 
 
 def _build_system_prompt(query: str, top_k: int = 3) -> str:
-    """构建 system prompt：精简的角色设定 + 检索到的相关资料"""
+    """构建 system prompt：资料在前、规则在后（模型对末尾指令更敏感）"""
     context = _retrieve_context(query, top_k)
     return (
-        "你是张文远的 AI 面试代理，请以张文远本人身份，自然、专业、真实地回答面试官问题。\n\n"
-        "【最重要的规则】\n"
-        "下面参考信息是唯一的事实来源。你只能使用其中明确写到的内容。\n"
-        "- 不要补充参考信息里没有的实现细节、技术方案、组件名、API 名、数据流或架构设计。\n"
-        "- 参考信息只说“参与/负责了某模块”时，就只讲这一层，不要展开内部是怎么实现的。\n"
-        "- 参考信息里没提到的技术，直接说没有相关经验，不要推测或编造。\n"
-        "- 不要新增数字、指标、项目成果或时间。\n"
-        "- 团队成果不要说成个人独立完成。\n"
-        "- 宁可回答得简短一些，也不要为了显得充实而补充细节。\n\n"
-        f"=== 参考信息 ===\n{context}\n=== 参考信息结束 ==="
+        "你是张文远的 AI 面试代理。请以张文远本人的身份，自然、真实地回答面试官提问。\n\n"
+        f"=== 参考资料（唯一的事实来源）===\n{context}\n"
+        f"=== 参考资料结束 ===\n\n"
+        "【回答要求】\n"
+        "- 只使用参考资料里明确写到的内容。没写到的部分不要补充实现细节、技术方案、组件名、API 名或架构设计。\n"
+        "- 资料只说“参与/负责某模块”时，就只讲这一层，不要展开内部实现。\n"
+        "- 资料没提到的技术，直接说没有相关经验；不新增数字、指标或成果。\n"
+        "- 不要每轮都自我介绍。除对方明确要求外，直接用“我”回答当前问题。\n"
+        "- 已经说过的内容不要重复，讲过的点不要再说一遍。\n"
+        "- 把回答讲完整，不要写到一半停住，也不要用“想了解的话我可以再展开”收尾。\n\n"
+        f"=== 回答规则 ===\n{CANDIDATE_FRAGMENTS['answer_rules']}"
     )
 
 
@@ -255,14 +274,17 @@ class handler(BaseHTTPRequestHandler):
             body = json.loads(raw.decode("utf-8"))
             messages = body.get("messages", [])
 
-            # 只保留最近 6 条，防止超长
-            messages = messages[-6:]
+            # 只保留最近 8 条，防止超长
+            messages = messages[-8:]
 
             if not messages or not messages[-1].get("content"):
                 return self._send_json({"response": "你好！我是张文远的 AI 代理，有什么想问的？"})
 
-            # 用最后一条用户消息做检索，拼接相关资料作为 system prompt
-            llm_messages = [{"role": "system", "content": _build_system_prompt(messages[-1]["content"])}]
+            # 用最近几条用户消息一起做检索：追问"那再详细说说"这类话本身没有关键词，
+            # 只拿最后一条会检索不到资料，回答就会变空泛
+            recent_asks = [m.get("content", "") for m in messages if m.get("role") == "user"]
+            query = " ".join(recent_asks[-3:]) or messages[-1]["content"]
+            llm_messages = [{"role": "system", "content": _build_system_prompt(query)}]
             for m in messages:
                 role = m.get("role", "user")
                 if role in ("user", "assistant"):
@@ -282,11 +304,14 @@ class handler(BaseHTTPRequestHandler):
                 base_url="https://api.deepseek.com",
             )
 
+            # deepseek-flash 是推理模型，思考过程也计入 max_tokens。
+            # 实测思考会吃掉 0~700 token，额度给小了正文就会被截断在半句话上，
+            # 所以这里留足余量（不会白花：实际只按生成量计费）。
             response = client.chat.completions.create(
                 model="deepseek-flash",
                 messages=llm_messages,
                 temperature=0.5,
-                max_tokens=500,
+                max_tokens=1600,
             )
 
             result = response.choices[0].message.content
