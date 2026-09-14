@@ -373,6 +373,10 @@ const btnClear       = document.getElementById('btnClear');
 let conversationHistory = [];
 let isLoading = false;
 
+// 触屏设备上 focus() 会直接弹出软键盘，把刚生成完的回答顶到看不见的地方，
+// 所以只在有鼠标的桌面端自动聚焦；手机端让用户自己点输入框
+const canAutoFocus = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
 // Helpers
 function timeStr() {
   return new Date().toLocaleTimeString('zh-CN', { hour:'2-digit', minute:'2-digit' });
@@ -539,7 +543,7 @@ async function handleSend(text) {
 
   isLoading = false;
   sendBtn.disabled = false;
-  userInput.focus();
+  if (canAutoFocus) userInput.focus();
 }
 
 // Input events
@@ -561,7 +565,7 @@ btnClear.addEventListener('click', clearMessages);
 window.addEventListener('DOMContentLoaded', () => {
   addWelcomeCard();
   addSuggestionChips();
-  userInput.focus();
+  if (canAutoFocus) userInput.focus();
 });
 </script>
 </body>
