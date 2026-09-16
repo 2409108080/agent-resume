@@ -17,7 +17,7 @@ CANDIDATE_FRAGMENTS = {
 - 个人优势：熟练 Vue、若依框架，可独立完成项目开发，擅长 Cypress 自动化测试，有宝马企业项目落地经验""",
 
     "core_skills": """核心技术栈：
-- 框架：Vue 2、Vue Router、Vuex、Axios、 cypress、若依
+- 框架：Vue 2、Vue Router、Vuex、Axios、Cypress、若依
 - UI 库：Element UI / Element Plus、ECharts
 - 技术领域：企业级后台系统、组件封装、工程化、多端 H5 开发
 - 权限体系：RBAC（菜单、按钮、部门、数据范围）
